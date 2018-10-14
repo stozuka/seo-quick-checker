@@ -8,7 +8,7 @@ A package to quickly check if the HTML is SEO friednly.
 
 ## Features
 
-Provides 8 default rules.
+Provides default rules below.
 
 - Find a tags without rel attribute
 - Find img tags without alt attribute
