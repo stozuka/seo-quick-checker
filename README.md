@@ -8,7 +8,7 @@ A package to quickly check if the HTML is SEO friednly.
 
 ## Features
 
-Provide 8 default rules.
+Provides 8 default rules.
 
 - Find a tags without rel attribute
 - Find img tags without alt attribute
@@ -20,16 +20,16 @@ Provide 8 default rules.
 
 On top of that, you can defined you own rules by using `ruleBuilder` module.
 
-For input, this package provides two ways
+For input, this package provides two ways.
 
-- Using fs.readFile
-- Using stream.readableStream
+- Using Node.js fs.readFile
+- Using Node.js stream.readableStream
 
 For output, this packages provides three ways below.
 
-- Using fs.writeFiel
-- Using stream.writableStream
-- Using console.log
+- Using Node.js fs.writeFile
+- Using Node.js stream.writableStream
+- Using Node.js console.log
 
 ## Getting Started
 
@@ -156,8 +156,6 @@ defaultRules.all
 ]
 ```
 
----
-
 To select some of them, you can get the functions one by one like this.
 
 2. `defaultRules.aWithoutRel`
@@ -191,20 +189,14 @@ const notices = seoQuickChecker(dom, [
 - `tag` {string}: Required.
 - `maxCount` {number}: Required. For example, if you want to check if there are 10 or less tags, you can set `maxCount = 10`. In this case 10 is ok, but 11 or more will be reported as a notice of `seoQuickChecker` function.
 
----
-
 2. `ruleBuilders.findMissingAttr(tag, attr)` : `function`
 
 - `tag` {string}: Required.
 - `attr` {number}: Required.
 
----
-
 3. `ruleBuilders.findMissingTag(tag)` : `function`
 
 - `tag` {string}: Required.
-
----
 
 If you want to use custom rules by using this module, you can write like this.
 
@@ -220,14 +212,10 @@ const notices = seoQuickChecker(dom, [customRule]);
 - `filePath` {string}: Required.
 - `encoding` {string}: Optional. Defaults to "utf8".
 
----
-
 2. `getDom.fromStream(filePath, encoding)` : `Promise<function>`
 
 - `filePath` {string}: Required.
 - `encoding` {string}: Optional. Defaults to "utf8".
-
----
 
 ### 4. seoQuickChecker module
 
@@ -243,16 +231,12 @@ const notices = seoQuickChecker(dom, [customRule]);
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
 
----
-
 2. `output.toFile(filePath, notices, connector, options)` : `Promise<undefined>`
 
 - `filePath` {string}: Required. Output file path.
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
 - `options` {Object}: Optional. Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details.
-
----
 
 3. `output.toStream(filePath, notices, connector, encoding)` : `Promise<undefined>`
 
@@ -320,7 +304,7 @@ const {
 If you want to `console.log` the notices, you can call like this.
 Please be careful, there is no `await` before `output.toConsole(notices)`.
 
-`output.toConsole('notices);`
+`output.toConsole(notices);`
 
 Full example of `index.js`.
 
