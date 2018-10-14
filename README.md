@@ -18,7 +18,18 @@ Provide 8 default rules.
 - Check if there is a meta keywords under head
 - Check if there is a meta description under head
 
-On top of that, user can defined own rules by using rule-builder module.
+On top of that, you can defined you own rules by using `ruleBuilder` module.
+
+For input, this package provides two ways
+
+- Using fs.readFile
+- Using stream.readableStream
+
+For output, this packages provides three ways below.
+
+- Using fs.writeFiel
+- Using stream.writableStream
+- Using console.log
 
 ## Getting Started
 
@@ -31,12 +42,12 @@ Then, you can run these commands to start the project.
 mkdir seo-quick-checker-test
 cd seo-quick-checker-test
 npm init
-npm i seo-quick-checker
+npm i
 ```
 
 ### 2. Create Files
 
-First, create neede directories and files.
+Create needed directories and files.
 
 ```
 touch index.js
@@ -45,9 +56,9 @@ touch input/index.html
 mkdir output
 ```
 
-To test out, you can copy-paste these contents to index.js and input/index.html
+To test out, you can copy-paste these code to `index.js` and `input/index.html`.
 
-index.js
+`index.js`
 
 ```
 'use strict';
@@ -70,7 +81,7 @@ const {
 })();
 ```
 
-input/index.html
+`input/index.html`
 
 ```
 <!-- no title under head -->
@@ -118,19 +129,19 @@ input/index.html
 
 Now you can run the script.
 
-`node index.js`
+```
+node index.js
+```
 
-When it's done, output.txt is created in output directory.
+When it's done, `output/output.txt` will be created.
 
-output.txt contained the results of the checker.
+`output/output.txt` contains the results of the seoQuickChecker function.
 
 ## API Reference
 
-### defaultRules module
+### 1. defaultRules module
 
-defaultRules.all
-
-This is an array of function.
+`defaultRules.all`
 
 ```
 defaultRules.all
@@ -145,7 +156,7 @@ defaultRules.all
 ]
 ```
 
-These are the functions to be provided to seoQuickChecker function.
+To select some of them, you can get the functions one by one like this.
 
 ```
 defaultRules.aWithoutRel
@@ -163,8 +174,8 @@ If you want to check all the default rules, you can write like this.
 const notices = seoQuickChecker(dom, defaultRules.all);
 ```
 
-If you want to check `defaultRules.aWithoutRel`
-and `defaultRules.headWithoutMetaDescription`, you can use [], because each of them is the function but second param of seoQuickChecker is an array.
+If you want to check, for example, `defaultRules.aWithoutRel`
+and `defaultRules.headWithoutMetaDescription`, you can use [] to wrap them because each of them is the function but second param of seoQuickChecker is an array.
 
 ```
 const notices = seoQuickChecker(dom, [
@@ -173,63 +184,94 @@ const notices = seoQuickChecker(dom, [
 ]);
 ```
 
-### ruleBuilder module
+### 2. ruleBuilders module
 
-### getDom module
+`ruleBuilders.countTag(tag, maxCount)`
 
-getDom.fromFile(filePath, encoding)
+- `tag` {string}: Required.
+- `maxCount` {number}: Required. For example, if you want to check if there are 10 or less tags, you can set `maxCount = 10`. In this case 10 is ok, but 11 or more will be reported as a notice of `seoQuickChecker` function.
 
-- filePath {string}: Required.
-- encoding {string}: Optional. Defaults to 'utf8'.
+Returns `function`.
 
-Returns `Promise<function>`
+`ruleBuilders.findMissingAttr(tag, attr)`
 
-getDom.fromStream(filePath, encoding)
+- `tag` {string}: Required.
+- `attr` {number}: Required.
 
-- filePath {string}: Required.
-- encoding {string}: Optional. Defaults to 'utf8'.
+Returns `function`.
 
-Returns `Promise<function>`
+`ruleBuilders.findMissingTag(tag)`
 
-### seoQuickChecker module
+- `tag` {string}: Required.
 
-seoQuickChecker(dom, rules)
+Returns `function`.
 
-- dom {function}: Required. The function return from `getDom.fromFile` or `getDom.fromStream`.
-- rules {function[]}: Required. An array contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module.
+If you want to use custom rules by using this module, you can write like this.
 
-Returns `string[]`
+```
+const customRule = ruleBuilders.countTag('h2', 1);
+const notices = seoQuickChecker(dom, [customRule]);
+```
 
-### output module
+### 3. getDom module
 
-output.toConsole(notices, connector)
+`getDom.fromFile(filePath, encoding)`
 
-- notices {string[]}: Required. Use the returning value of `seoQuickChecker` function.
-- connector {string}: Optional. Defaults to '\n'. A string to join the elements of notices array.
+- `filePath` {string}: Required.
+- `encoding` {string}: Optional. Defaults to "utf8".
+
+Returns `Promise<function>`.
+
+`getDom.fromStream(filePath, encoding)`
+
+- `filePath` {string}: Required.
+- `encoding` {string}: Optional. Defaults to "utf8".
+
+Returns `Promise<function>`.
+
+### 4. seoQuickChecker module
+
+`seoQuickChecker(dom, rules)`
+
+- `dom` {function}: Required. The function returned from `getDom.fromFile` or `getDom.fromStream`.
+- `rules` {function[]}: Required. An array contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module.
+
+Returns `string[]`.
+
+### 5. output module
+
+`output.toConsole(notices, connector)`
+
+- `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
+- `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
 
 Returns `undefined`.
 
-output.toFile(filePath, notices, connector, options)
+`output.toFile(filePath, notices, connector, options)`
 
-- filePath {string}: Required. Output file path.
-- notices {string[]}: Required. Use the returning value of `seoQuickChecker` function.
-- connector {string}: Optional. Defaults to '\n'. A string to join the elements of notices array.
-- options {Object}: Optional. Defaults to {}. See `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details.
+- `filePath` {string}: Required. Output file path.
+- `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
+- `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
+- `options` {Object}: Optional. Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details.
 
-output.toStream(filePath, notices, connector, encoding)
+Returns `Promise<undefined>`.
 
-- filePath {string}: Required. Output file path.
-- notices {string[]}: Required. Use the returning value of `seoQuickChecker` function.
-- connector {string}: Optional. Defaults to '\n'. A string to join the elements of notices array.
-- encoding {string}: Optional. Defaults to 'utf8'.
+`output.toStream(filePath, notices, connector, encoding)`
+
+- `filePath` {string}: Required. Output file path.
+- `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
+- `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
+- `encoding` {string}: Optional. Defaults to "utf8".
+
+Returns `Promise<undefined>`.
 
 ## More Examples
 
-If you want to use streaming API of Node.js to getDom, you can call like this.
+If you want to use streaming API of Node.js to `getDom`, you can call like this.
 
 `const dom = await getDom.fromStream('./input/index.html');`
 
-Full example of `index.js`
+Full example of `index.js`.
 
 ```
 'use strict';
@@ -252,11 +294,11 @@ const {
 })();
 ```
 
-If you want to use streaming API of Node.js to output, you can call like this.
+If you want to use streaming API of Node.js to `output`, you can call like this.
 
 `await output.toStream('./output/output.txt', notices);`
 
-Full example of `index.js`
+Full example of `index.js`.
 
 ```
 'use strict';
@@ -279,12 +321,12 @@ const {
 })();
 ```
 
-If you want to console.log the notices, you can call like this.
-Please be careful, there is no `await` before output.toConsole(notices).
+If you want to `console.log` the notices, you can call like this.
+Please be careful, there is no `await` before `output.toConsole(notices)`.
 
-`await output.toStream('./output/output.txt', notices);`
+`output.toConsole('notices);`
 
-Full example of `index.js`
+Full example of `index.js`.
 
 ```
 'use strict';
@@ -309,11 +351,11 @@ const {
 
 ## Testing
 
-One time tesing:
+One time tesing
 
 `npm run test`
 
-Watch the testing:
+Watch the testing
 
 `npm run watchtest`
 
