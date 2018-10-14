@@ -1,5 +1,6 @@
 'use strict';
 
+// const fs = require('fs');
 // const path = require('path');
 const chai = require('chai');
 const sinon = require('sinon');
@@ -38,7 +39,9 @@ describe('output', () => {
 
   // TODO: write this test
   describe.skip('to-file', () => {
-    it('should write to a file', async () => {});
+    it('should write to a file', async () => {
+      // const ws = fs.createWriteStream(filePath, encoding);
+    });
   });
 
   // TODO: write this test
