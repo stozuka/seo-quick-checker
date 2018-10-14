@@ -141,7 +141,7 @@ When it's done, `output/output.txt` will be created.
 
 ### 1. defaultRules module
 
-`defaultRules.all`
+1. `defaultRules.all`
 
 ```
 defaultRules.all
@@ -156,17 +156,17 @@ defaultRules.all
 ]
 ```
 
+---
+
 To select some of them, you can get the functions one by one like this.
 
-```
-defaultRules.aWithoutRel
-defaultRules.headWithoutMetaDescription
-defaultRules.headWithoutMetaKeywords
-defaultRules.headWithoutTitle
-defaultRules.imgWithoutAlt
-defaultRules.moreThan1H1
-defaultRules.moreThan15Strong
-```
+2. `defaultRules.aWithoutRel`
+3. `defaultRules.headWithoutMetaDescription`
+4. `defaultRules.headWithoutMetaKeywords`
+5. `defaultRules.headWithoutTitle`
+6. `defaultRules.imgWithoutAlt`
+7. `defaultRules.moreThan1H1`
+8. `defaultRules.moreThan15Strong`
 
 If you want to check all the default rules, you can write like this.
 
@@ -186,25 +186,25 @@ const notices = seoQuickChecker(dom, [
 
 ### 2. ruleBuilders module
 
-`ruleBuilders.countTag(tag, maxCount)`
+1. `ruleBuilders.countTag(tag, maxCount)` : `function`
 
 - `tag` {string}: Required.
 - `maxCount` {number}: Required. For example, if you want to check if there are 10 or less tags, you can set `maxCount = 10`. In this case 10 is ok, but 11 or more will be reported as a notice of `seoQuickChecker` function.
 
-Returns `function`.
+---
 
-`ruleBuilders.findMissingAttr(tag, attr)`
+2. `ruleBuilders.findMissingAttr(tag, attr)` : `function`
 
 - `tag` {string}: Required.
 - `attr` {number}: Required.
 
-Returns `function`.
+---
 
-`ruleBuilders.findMissingTag(tag)`
+3. `ruleBuilders.findMissingTag(tag)` : `function`
 
 - `tag` {string}: Required.
 
-Returns `function`.
+---
 
 If you want to use custom rules by using this module, you can write like this.
 
@@ -215,55 +215,51 @@ const notices = seoQuickChecker(dom, [customRule]);
 
 ### 3. getDom module
 
-`getDom.fromFile(filePath, encoding)`
+1. `getDom.fromFile(filePath, encoding)` : `Promise<function>`
 
 - `filePath` {string}: Required.
 - `encoding` {string}: Optional. Defaults to "utf8".
 
-Returns `Promise<function>`.
+---
 
-`getDom.fromStream(filePath, encoding)`
+2. `getDom.fromStream(filePath, encoding)` : `Promise<function>`
 
 - `filePath` {string}: Required.
 - `encoding` {string}: Optional. Defaults to "utf8".
 
-Returns `Promise<function>`.
+---
 
 ### 4. seoQuickChecker module
 
-`seoQuickChecker(dom, rules)`
+1. `seoQuickChecker(dom, rules)` : `string[]`
 
 - `dom` {function}: Required. The function returned from `getDom.fromFile` or `getDom.fromStream`.
 - `rules` {function[]}: Required. An array contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module.
 
-Returns `string[]`.
-
 ### 5. output module
 
-`output.toConsole(notices, connector)`
+1. `output.toConsole(notices, connector)` : `undefined`
 
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
 
-Returns `undefined`.
+---
 
-`output.toFile(filePath, notices, connector, options)`
+2. `output.toFile(filePath, notices, connector, options)` : `Promise<undefined>`
 
 - `filePath` {string}: Required. Output file path.
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
 - `options` {Object}: Optional. Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details.
 
-Returns `Promise<undefined>`.
+---
 
-`output.toStream(filePath, notices, connector, encoding)`
+3. `output.toStream(filePath, notices, connector, encoding)` : `Promise<undefined>`
 
 - `filePath` {string}: Required. Output file path.
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
 - `encoding` {string}: Optional. Defaults to "utf8".
-
-Returns `Promise<undefined>`.
 
 ## More Examples
 
