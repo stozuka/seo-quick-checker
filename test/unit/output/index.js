@@ -4,7 +4,7 @@
 const chai = require('chai');
 const sinon = require('sinon');
 // const { toConsole, toFile, toStream } = require('../../../lib/output');
-const { toConsole } = require('../../../lib/output');
+const { toConsoleLog } = require('../../../lib/output');
 
 const expect = chai.expect;
 const assert = chai.assert;
@@ -27,12 +27,12 @@ describe('output', () => {
     after(() => spy.restore());
 
     it('should console.log', async () => {
-      toConsole(notices, connector);
+      toConsoleLog(notices, connector);
       expect(spy.calledWith(data)).to.be.true;
     });
 
     it('should throw an error when missing first argument', () => {
-      assert.throws(() => toConsole());
+      assert.throws(() => toConsoleLog());
     });
   });
 
