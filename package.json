@@ -1,0 +1,50 @@
+{
+  "name": "seo-quick-checker",
+  "version": "0.0.1",
+  "description": "A package to quickly check if the HTML is SEO friendly.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha test/unit --recursive",
+    "watchtest": "NODE_ENV=test mocha test/unit --recursive --watch",
+    "fmt": "prettier --write '{lib,test}/**/*.js'",
+    "lint": "eslint lib test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "npm run fmt",
+      "git add"
+    ]
+  },
+  "author": "stozuka",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stozuka/seo-quick-checker.git"
+  },
+  "keywords": [
+    "seo",
+    "seo-quick-checker"
+  ],
+  "bugs": {
+    "url": "https://github.com/stozuka/seo-quick-checker/issues"
+  },
+  "homepage": "https://github.com/stozuka/seo-quick-checker",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.7.0",
+    "husky": "^1.1.2",
+    "lint-staged": "^7.3.0",
+    "mocha": "^5.2.0",
+    "prettier": "^1.14.3",
+    "sinon": "^6.3.5"
+  }
+}

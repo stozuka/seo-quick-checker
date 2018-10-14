@@ -1,0 +1,1 @@
+# seo-quick-checker
