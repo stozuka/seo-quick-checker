@@ -216,7 +216,7 @@ const notices = seoQuickChecker(dom, [customRule]);
 
 - `filePath` {stream.Readable}: Required.
 
-### 4. seoQuickChecker module
+### 4. seoQuickChecker function
 
 1. `seoQuickChecker(dom, rules)` : `string[]`
 
@@ -268,8 +268,7 @@ const {
     const rs = fs.createReadStream('./input/index.html', 'utf8');
     const dom = await getDom.fromStream(rs);
     const notices = seoQuickChecker(dom, defaultRules.all);
-    const ws = fs.createWriteStream('./output/output.txt', 'utf8);
-    await output.toStream(ws, notices);
+    await output.toFile('./output/output.txt', notices);
   } catch (error) {
     console.error(error);
   }
@@ -298,8 +297,8 @@ const {
     const rs = fs.createReadStream('./input/index.html', 'utf8');
     const dom = await getDom.fromStream(rs);
     const notices = seoQuickChecker(dom, defaultRules.all);
-    const ws = fs.createWriteStream('./output/output.txt', 'utf8);
-    await output.toStream(ws, notices, '\n');
+    const ws = fs.createWriteStream('./output/output.txt', 'utf8');
+    await output.toStream(ws, notices);
   } catch (error) {
     console.error(error);
   }
@@ -328,7 +327,7 @@ const {
     const rs = fs.createReadStream('./input/index.html', 'utf8');
     const dom = await getDom.fromStream(rs);
     const notices = seoQuickChecker(dom, defaultRules.all);
-    output.toConsoleLogLog(notices);
+    output.toConsoleLog(notices);
   } catch (error) {
     console.error(error);
   }
