@@ -5,6 +5,7 @@ const chai = require('chai');
 const { fromFile } = require('../../../lib/get-dom');
 const { imgWithoutAlt } = require('../../../lib/default-rules');
 
+const assert = chai.assert;
 const expect = chai.expect;
 const BASE_PATH = path.resolve(
   __dirname,
@@ -13,25 +14,35 @@ const BASE_PATH = path.resolve(
 
 describe('default-rules', () => {
   describe('img-without-alt', () => {
-    it('should return the error message', async () => {
+    it('should return the notice when img without alt found', async () => {
       const filePath = path.resolve(BASE_PATH, 'img-without-alt.html');
       const dom = await fromFile(filePath);
-      const result = imgWithoutAlt(dom);
-      expect(result).to.be.an('string');
+      const notice = imgWithoutAlt(dom);
+      expect(notice).to.be.an('string');
     });
 
-    it('should return null when all the img tags have alt attr', async () => {
+    it('should return the corrent number of notices', async () => {
+      const filePath = path.resolve(BASE_PATH, 'img-without-alt.html');
+      const dom = await fromFile(filePath);
+      // Notice: "There are(is) ${diff} ${tag} without ${attr}.""
+      const notice = imgWithoutAlt(dom);
+      const words = notice.split(' ');
+      const number = parseInt(words[2]);
+      assert.equal(number, 1);
+    });
+
+    it('should return empty string when img without alt not found', async () => {
       const filePath = path.resolve(BASE_PATH, 'img-with-alt.html');
       const dom = await fromFile(filePath);
-      const result = imgWithoutAlt(dom);
-      expect(result).to.be.empty;
+      const notice = imgWithoutAlt(dom);
+      expect(notice).to.be.empty;
     });
 
-    it('should return message when alt is empty string', async () => {
+    it('should return the notice when alt is empty string', async () => {
       const filePath = path.resolve(BASE_PATH, 'img-with-empty-alt.html');
       const dom = await fromFile(filePath);
-      const result = imgWithoutAlt(dom);
-      expect(result).to.be.an('string');
+      const notice = imgWithoutAlt(dom);
+      expect(notice).to.be.an('string');
     });
   });
 });

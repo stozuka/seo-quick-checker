@@ -9,7 +9,7 @@ const BASE_PATH = path.resolve(__dirname, '../../fixtures/rule-builders');
 
 describe('rule-builders', () => {
   describe('find-missing-attr', () => {
-    it('should not have notice', async () => {
+    it('should not have the notice when find missing attr is ok', async () => {
       const customRule = ruleBuilders.findMissingAttr('span', 'class');
       const filePath = path.resolve(BASE_PATH, 'find-missing-attr-ok.html');
       const dom = await getDom.fromFile(filePath);
@@ -17,7 +17,7 @@ describe('rule-builders', () => {
       assert.equal(notices.length, 0);
     });
 
-    it('should have a notice', async () => {
+    it('should have the notice when missing attr is not ok', async () => {
       const customRule = ruleBuilders.findMissingAttr('span', 'class');
       const filePath = path.resolve(BASE_PATH, 'find-missing-attr-ng.html');
       const dom = await getDom.fromFile(filePath);
@@ -25,11 +25,11 @@ describe('rule-builders', () => {
       assert.equal(notices.length, 1);
     });
 
-    it('should throw an error when missing first argument', () => {
+    it('should throw an error when first argument is missing', () => {
       assert.throws(() => ruleBuilders.findMissingAttr());
     });
 
-    it('should throw an error when missing second argument', () => {
+    it('should throw an error when second argument is missing', () => {
       assert.throws(() => ruleBuilders.findMissingAttr('span'));
     });
   });

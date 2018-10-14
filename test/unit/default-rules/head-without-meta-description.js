@@ -13,34 +13,34 @@ const BASE_PATH = path.resolve(
 
 describe('default-rules', () => {
   describe('head-without-meta-description', () => {
-    it('should return the error message', async () => {
+    it('should return the notice when not found meta description', async () => {
       const filePath = path.resolve(
         BASE_PATH,
         'head-without-meta-description.html',
       );
       const dom = await fromFile(filePath);
-      const result = headWithoutMetaDescription(dom);
-      expect(result).to.be.an('string');
+      const notice = headWithoutMetaDescription(dom);
+      expect(notice).to.be.an('string');
     });
 
-    it('should return null when meta description exists', async () => {
+    it('should return empty string when found meta description', async () => {
       const filePath = path.resolve(
         BASE_PATH,
         'head-with-meta-description.html',
       );
       const dom = await fromFile(filePath);
-      const result = headWithoutMetaDescription(dom);
-      expect(result).to.be.empty;
+      const notice = headWithoutMetaDescription(dom);
+      expect(notice).to.be.empty;
     });
 
-    it('should return error message when meta description exists but not under head', async () => {
+    it('should return the notice when meta description found but not under head', async () => {
       const filePath = path.resolve(
         BASE_PATH,
         'meta-description-not-under-head.html',
       );
       const dom = await fromFile(filePath);
-      const result = headWithoutMetaDescription(dom);
-      expect(result).to.be.an('string');
+      const notice = headWithoutMetaDescription(dom);
+      expect(notice).to.be.an('string');
     });
   });
 });

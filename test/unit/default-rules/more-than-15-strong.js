@@ -13,18 +13,18 @@ const BASE_PATH = path.resolve(
 
 describe('default-rules', () => {
   describe('more-than-15-strong', () => {
-    it('should return the error message', async () => {
+    it('should return the notice when strong tag more than 15', async () => {
       const filePath = path.resolve(BASE_PATH, 'more-than-15-strong.html');
       const dom = await fromFile(filePath);
-      const result = moreThan15Strong(dom);
-      expect(result).to.be.an('string');
+      const notice = moreThan15Strong(dom);
+      expect(notice).to.be.an('string');
     });
 
-    it('should return null', async () => {
+    it('should return empty string when strong tag not more than 15', async () => {
       const filePath = path.resolve(BASE_PATH, 'less-than-15-strong.html');
       const dom = await fromFile(filePath);
-      const result = moreThan15Strong(dom);
-      expect(result).to.be.empty;
+      const notice = moreThan15Strong(dom);
+      expect(notice).to.be.empty;
     });
   });
 });

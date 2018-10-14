@@ -9,7 +9,7 @@ const BASE_PATH = path.resolve(__dirname, '../../fixtures/rule-builders');
 
 describe('rule-builders', () => {
   describe('count-tag', () => {
-    it('should not have notice', async () => {
+    it('should not have notice when count tag is ok', async () => {
       const customRule = ruleBuilders.countTag('h2', 1);
       const filePath = path.resolve(BASE_PATH, 'count-tag-ok.html');
       const dom = await getDom.fromFile(filePath);
@@ -17,7 +17,7 @@ describe('rule-builders', () => {
       assert.equal(notices.length, 0);
     });
 
-    it('should have a notice', async () => {
+    it('should have a notice when count tag is not ok', async () => {
       const customRule = ruleBuilders.countTag('h2', 1);
       const filePath = path.resolve(BASE_PATH, 'count-tag-ng.html');
       const dom = await getDom.fromFile(filePath);

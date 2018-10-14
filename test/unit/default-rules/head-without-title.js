@@ -13,25 +13,25 @@ const BASE_PATH = path.resolve(
 
 describe('default-rules', () => {
   describe('head-without-title', () => {
-    it('should return the error message', async () => {
+    it('should return the notice when title not found', async () => {
       const filePath = path.resolve(BASE_PATH, 'head-without-title.html');
       const dom = await fromFile(filePath);
-      const result = headWithoutTitle(dom);
-      expect(result).to.be.an('string');
+      const notice = headWithoutTitle(dom);
+      expect(notice).to.be.an('string');
     });
 
-    it('should return null when title does not exist', async () => {
+    it('should return empty string when title found', async () => {
       const filePath = path.resolve(BASE_PATH, 'head-with-title.html');
       const dom = await fromFile(filePath);
-      const result = headWithoutTitle(dom);
-      expect(result).to.be.empty;
+      const notice = headWithoutTitle(dom);
+      expect(notice).to.be.empty;
     });
 
-    it('should return error message when title exists but not under head', async () => {
+    it('should return the notice when title found but not under head', async () => {
       const filePath = path.resolve(BASE_PATH, 'title-not-under-head.html');
       const dom = await fromFile(filePath);
-      const result = headWithoutTitle(dom);
-      expect(result).to.be.an('string');
+      const notice = headWithoutTitle(dom);
+      expect(notice).to.be.an('string');
     });
   });
 });

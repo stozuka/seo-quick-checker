@@ -26,11 +26,11 @@ describe('seo-quick-checker', () => {
     expect(notices).to.be.an('array').that.is.empty;
   });
 
-  it('should throw an error when missing first argument', () => {
+  it('should throw an error when first argument is missing', () => {
     assert.throws(() => seoQuickChecker());
   });
 
-  it('should throw an error when missing second argument', async () => {
+  it('should throw an error when second argument is missing', async () => {
     const filePath = path.resolve(BASE_PATH, 'all-ok.html');
     const dom = await getDom.fromFile(filePath);
     assert.throws(() => seoQuickChecker(dom));
