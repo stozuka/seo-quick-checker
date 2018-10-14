@@ -25,19 +25,19 @@ describe('rule-builders', () => {
       assert.equal(notices.length, 1);
     });
 
-    it('should throw an error when missing first argument', async () => {
+    it('should throw an error when missing first argument', () => {
       assert.throws(() => ruleBuilders.countTag());
     });
 
-    it('should throw an error when missing second argument', async () => {
+    it('should throw an error when missing second argument', () => {
       assert.throws(() => ruleBuilders.countTag('h2'));
     });
 
-    it('should throw an error when maxCount is less than 1', async () => {
+    it('should throw an error when maxCount is less than 1', () => {
       assert.throws(() => ruleBuilders.countTag('h2', 0));
     });
 
-    it('should throw an error when maxCount is negative', async () => {
+    it('should throw an error when maxCount is negative', () => {
       assert.throws(() => ruleBuilders.countTag('h2', -1));
     });
   });

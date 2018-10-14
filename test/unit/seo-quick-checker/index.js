@@ -25,4 +25,14 @@ describe('seo-quick-checker', () => {
     const notices = seoQuickChecker(dom, rules);
     expect(notices).to.be.an('array').that.is.empty;
   });
+
+  it('should throw an error when missing first argument', () => {
+    assert.throws(() => seoQuickChecker());
+  });
+
+  it('should throw an error when missing second argument', async () => {
+    const filePath = path.resolve(BASE_PATH, 'all-ok.html');
+    const dom = await getDom.fromFile(filePath);
+    assert.throws(() => seoQuickChecker(dom));
+  });
 });

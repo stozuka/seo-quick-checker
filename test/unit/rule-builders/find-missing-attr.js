@@ -24,5 +24,13 @@ describe('rule-builders', () => {
       const notices = seoQuickChecker(dom, [customRule]);
       assert.equal(notices.length, 1);
     });
+
+    it('should throw an error when missing first argument', () => {
+      assert.throws(() => ruleBuilders.findMissingAttr());
+    });
+
+    it('should throw an error when missing second argument', () => {
+      assert.throws(() => ruleBuilders.findMissingAttr('span'));
+    });
   });
 });

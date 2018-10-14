@@ -2,10 +2,14 @@
 
 const path = require('path');
 const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 const { fromFile, fromStream } = require('../../../lib/get-dom');
 
 const assert = chai.assert;
+const expect = chai.expect;
 const BASE_PATH = path.resolve(__dirname, '../../fixtures/get-dom');
+
+chai.use(chaiAsPromised);
 
 describe('get-dom', () => {
   describe('from-file', function() {
@@ -15,6 +19,10 @@ describe('get-dom', () => {
       const h1Text = dom('h1').text();
       assert.equal(h1Text, 'test');
     });
+
+    it('should throw an error when filePath is missing', () => {
+      expect(fromFile()).to.be.rejected;
+    });
   });
 
   describe('from-stream', () => {
@@ -23,6 +31,10 @@ describe('get-dom', () => {
       const dom = await fromStream(filePath);
       const h1Text = dom('h1').text();
       assert.equal(h1Text, 'test');
+    });
+
+    it('should throw an error when filePath is missing', () => {
+      assert.throws(() => fromStream());
     });
   });
 });

@@ -7,15 +7,15 @@ const sinon = require('sinon');
 const { toConsole } = require('../../../lib/output');
 
 const expect = chai.expect;
-// const assert = chai.assert;
+const assert = chai.assert;
 
 describe('output', () => {
-  const messages = [
+  const notices = [
     'There are(is) 1 img without rel',
     'This HTML has more than 1 h1',
   ];
   const connector = '\n';
-  const data = messages.join(connector);
+  const data = notices.join(connector);
 
   describe('to-console', () => {
     let spy;
@@ -27,8 +27,12 @@ describe('output', () => {
     after(() => spy.restore());
 
     it('should console.log', async () => {
-      toConsole(messages, connector);
+      toConsole(notices, connector);
       expect(spy.calledWith(data)).to.be.true;
+    });
+
+    it('should throw an error when missing first argument', () => {
+      assert.throws(() => toConsole());
     });
   });
 
