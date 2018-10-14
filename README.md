@@ -212,10 +212,9 @@ const notices = seoQuickChecker(dom, [customRule]);
 - `filePath` {string}: Required.
 - `encoding` {string}: Optional. Defaults to "utf8".
 
-2. `getDom.fromStream(filePath, encoding)` : `Promise<function>`
+2. `getDom.fromStream(rs)` : `Promise<function>`
 
-- `filePath` {string}: Required.
-- `encoding` {string}: Optional. Defaults to "utf8".
+- `filePath` {stream.Readable}: Required.
 
 ### 4. seoQuickChecker module
 
@@ -226,7 +225,7 @@ const notices = seoQuickChecker(dom, [customRule]);
 
 ### 5. output module
 
-1. `output.toConsole(notices, connector)` : `undefined`
+1. `output.toConsoleLogLog(notices, connector)` : `undefined`
 
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
@@ -238,7 +237,7 @@ const notices = seoQuickChecker(dom, [customRule]);
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
 - `options` {Object}: Optional. Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details.
 
-3. `output.toStream(filePath, notices, connector, encoding)` : `Promise<undefined>`
+3. `output.toStream(ws, notices, connector)` : `Promise<undefined>`
 
 - `filePath` {string}: Required. Output file path.
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
@@ -249,13 +248,14 @@ const notices = seoQuickChecker(dom, [customRule]);
 
 If you want to use streaming API of Node.js to `getDom`, you can call like this.
 
-`const dom = await getDom.fromStream('./input/index.html');`
+`const dom = await getDom.fromStream(rs);`
 
 Full example of `index.js`.
 
 ```
 'use strict';
 
+const fs = require('fs');
 const {
   seoQuickChecker,
   defaultRules,
@@ -265,9 +265,11 @@ const {
 
 (async function() {
   try {
-    const dom = await getDom.fromStream('./input/index.html');
+    const rs = fs.createReadStream('./input/index.html', 'utf8');
+    const dom = await getDom.fromStream(rs);
     const notices = seoQuickChecker(dom, defaultRules.all);
-    await output.toStream('./output/output.txt', notices);
+    const ws = fs.createWriteStream('./output/output.txt', 'utf8);
+    await output.toStream(ws, notices);
   } catch (error) {
     console.error(error);
   }
@@ -276,13 +278,14 @@ const {
 
 If you want to use streaming API of Node.js to `output`, you can call like this.
 
-`await output.toStream('./output/output.txt', notices);`
+`await output.toStream(ws, notices);`
 
 Full example of `index.js`.
 
 ```
 'use strict';
 
+const fs = require('fs');
 const {
   seoQuickChecker,
   defaultRules,
@@ -292,9 +295,11 @@ const {
 
 (async function() {
   try {
-    const dom = await getDom.fromStream('./input/index.html');
+    const rs = fs.createReadStream('./input/index.html', 'utf8');
+    const dom = await getDom.fromStream(rs);
     const notices = seoQuickChecker(dom, defaultRules.all);
-    await output.toStream('./output/output.txt', notices);
+    const ws = fs.createWriteStream('./output/output.txt', 'utf8);
+    await output.toStream(ws, notices, '\n');
   } catch (error) {
     console.error(error);
   }
@@ -302,9 +307,9 @@ const {
 ```
 
 If you want to `console.log` the notices, you can call like this.
-Please be careful, there is no `await` before `output.toConsole(notices)`.
+Please be careful, there is no `await` before `output.toConsoleLog(notices)`.
 
-`output.toConsole(notices);`
+`output.toConsoleLog(notices);`
 
 Full example of `index.js`.
 
@@ -320,9 +325,10 @@ const {
 
 (async function() {
   try {
-    const dom = await getDom.fromStream('./input/index.html');
+    const rs = fs.createReadStream('./input/index.html', 'utf8');
+    const dom = await getDom.fromStream(rs);
     const notices = seoQuickChecker(dom, defaultRules.all);
-    output.toConsole(notices);
+    output.toConsoleLogLog(notices);
   } catch (error) {
     console.error(error);
   }
