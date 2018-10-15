@@ -147,11 +147,11 @@ When it's done, `output/output.txt` will be created.
 defaultRules.all;
 //=>
 // [
-//   aWithoutRel,
-//   headWithoutMetaDescription,
-//   headWithoutMetaKeywords,
-//   headWithoutTitle,
-//   imgWithoutAlt,
+//   aMissingRel,
+//   noMetaDescriptionInHead,
+//   noMetaKeywordsInHead,
+//   noTitleInHead,
+//   imgMissingAlt,
 //   moreThan1H1,
 //   moreThan15Strong,
 // ]
@@ -159,11 +159,11 @@ defaultRules.all;
 
 To select some of them, you can get the functions one by one like this.
 
-2. `defaultRules.aWithoutRel`
-3. `defaultRules.headWithoutMetaDescription`
-4. `defaultRules.headWithoutMetaKeywords`
-5. `defaultRules.headWithoutTitle`
-6. `defaultRules.imgWithoutAlt`
+2. `defaultRules.aMissingRel`
+3. `defaultRules.noMetaDescriptionInHead`
+4. `defaultRules.noMetaKeywordsInHead`
+5. `defaultRules.noTitleInHead`
+6. `defaultRules.imgMissingAlt`
 7. `defaultRules.moreThan1H1`
 8. `defaultRules.moreThan15Strong`
 
@@ -173,13 +173,13 @@ If you want to check all the default rules, you can write like this.
 const notices = seoQuickChecker(dom, defaultRules.all);
 ```
 
-If you want to check, for example, `defaultRules.aWithoutRel`
-and `defaultRules.headWithoutMetaDescription`, you can use [] to wrap them because each of them is the function but second param of seoQuickChecker is an array.
+If you want to check, for example, `defaultRules.aMissingRel`
+and `defaultRules.noMetaDescriptionInHead`, you can use [] to wrap them because each of them is the function but second param of seoQuickChecker is an array.
 
 ```javascript
 const notices = seoQuickChecker(dom, [
-  defaultRules.aWithoutRel,
-  defaultRules.headWithoutMetaDescription,
+  defaultRules.aMissingRel,
+  defaultRules.noMetaDescriptionInHead,
 ]);
 ```
 

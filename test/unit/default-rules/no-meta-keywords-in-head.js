@@ -3,7 +3,7 @@
 const path = require('path');
 const chai = require('chai');
 const { fromFile } = require('../../../lib/get-dom');
-const { headWithoutMetaKeywords } = require('../../../lib/default-rules');
+const { noMetaKeywordsInHead } = require('../../../lib/default-rules');
 
 const expect = chai.expect;
 const BASE_PATH = path.resolve(
@@ -12,21 +12,21 @@ const BASE_PATH = path.resolve(
 );
 
 describe('default-rules', () => {
-  describe('head-without-meta-name', () => {
+  describe('no-meta-keywords-in-head', () => {
     it('should return the notice when meta keywords not found', async () => {
       const filePath = path.resolve(
         BASE_PATH,
-        'head-without-meta-keywords.html',
+        'no-meta-description-in-head.html',
       );
       const dom = await fromFile(filePath);
-      const notice = headWithoutMetaKeywords(dom);
+      const notice = noMetaKeywordsInHead(dom);
       expect(notice).to.be.an('string');
     });
 
     it('should return empty string when meta keywords found', async () => {
       const filePath = path.resolve(BASE_PATH, 'head-with-meta-keywords.html');
       const dom = await fromFile(filePath);
-      const notice = headWithoutMetaKeywords(dom);
+      const notice = noMetaKeywordsInHead(dom);
       expect(notice).to.be.empty;
     });
 
@@ -36,7 +36,7 @@ describe('default-rules', () => {
         'meta-keywords-not-under-head.html',
       );
       const dom = await fromFile(filePath);
-      const notice = headWithoutMetaKeywords(dom);
+      const notice = noMetaKeywordsInHead(dom);
       expect(notice).to.be.an('string');
     });
   });

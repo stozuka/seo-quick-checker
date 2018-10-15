@@ -3,7 +3,7 @@
 const path = require('path');
 const chai = require('chai');
 const { fromFile } = require('../../../lib/get-dom');
-const { headWithoutMetaDescription } = require('../../../lib/default-rules');
+const { noMetaDescriptionInHead } = require('../../../lib/default-rules');
 
 const expect = chai.expect;
 const BASE_PATH = path.resolve(
@@ -12,14 +12,14 @@ const BASE_PATH = path.resolve(
 );
 
 describe('default-rules', () => {
-  describe('head-without-meta-description', () => {
+  describe('no-meta-description-in-head', () => {
     it('should return the notice when not found meta description', async () => {
       const filePath = path.resolve(
         BASE_PATH,
-        'head-without-meta-description.html',
+        'no-meta-description-in-head.html',
       );
       const dom = await fromFile(filePath);
-      const notice = headWithoutMetaDescription(dom);
+      const notice = noMetaDescriptionInHead(dom);
       expect(notice).to.be.an('string');
     });
 
@@ -29,7 +29,7 @@ describe('default-rules', () => {
         'head-with-meta-description.html',
       );
       const dom = await fromFile(filePath);
-      const notice = headWithoutMetaDescription(dom);
+      const notice = noMetaDescriptionInHead(dom);
       expect(notice).to.be.empty;
     });
 
@@ -39,7 +39,7 @@ describe('default-rules', () => {
         'meta-description-not-under-head.html',
       );
       const dom = await fromFile(filePath);
-      const notice = headWithoutMetaDescription(dom);
+      const notice = noMetaDescriptionInHead(dom);
       expect(notice).to.be.an('string');
     });
   });
