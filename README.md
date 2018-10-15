@@ -60,7 +60,7 @@ To test out, you can copy-paste these code to `index.js` and `input/index.html`.
 
 `index.js`
 
-```
+```javascript
 'use strict';
 
 const {
@@ -83,7 +83,7 @@ const {
 
 `input/index.html`
 
-```
+```html
 <!-- no title under head -->
 <!-- no meta description under head -->
 <!-- no meta keywords under head -->
@@ -143,17 +143,18 @@ When it's done, `output/output.txt` will be created.
 
 1. `defaultRules.all`
 
-```
-defaultRules.all
-//=> [
-  aWithoutRel,
-  headWithoutMetaDescription,
-  headWithoutMetaKeywords,
-  headWithoutTitle,
-  imgWithoutAlt,
-  moreThan1H1,
-  moreThan15Strong,
-]
+```javascript
+defaultRules.all;
+//=>
+// [
+//   aWithoutRel,
+//   headWithoutMetaDescription,
+//   headWithoutMetaKeywords,
+//   headWithoutTitle,
+//   imgWithoutAlt,
+//   moreThan1H1,
+//   moreThan15Strong,
+// ]
 ```
 
 To select some of them, you can get the functions one by one like this.
@@ -175,34 +176,40 @@ const notices = seoQuickChecker(dom, defaultRules.all);
 If you want to check, for example, `defaultRules.aWithoutRel`
 and `defaultRules.headWithoutMetaDescription`, you can use [] to wrap them because each of them is the function but second param of seoQuickChecker is an array.
 
-```
+```javascript
 const notices = seoQuickChecker(dom, [
   defaultRules.aWithoutRel,
-  defaultRules.headWithoutMetaDescription
+  defaultRules.headWithoutMetaDescription,
 ]);
 ```
 
 ### 2. ruleBuilders module
 
-1. `ruleBuilders.countTag(tag, maxCount)` : `function`
+1. `ruleBuilders.tagCountMoreThan(tag, maxCount)` : `function`
 
 - `tag` {string}: Required.
 - `maxCount` {number}: Required. For example, if you want to check if there are 10 or less tags, you can set `maxCount = 10`. In this case 10 is ok, but 11 or more will be reported as a notice of `seoQuickChecker` function.
 
-2. `ruleBuilders.findMissingAttr(tag, attr)` : `function`
+2. `ruleBuilders.tagCountMoreThan(tag, attr)` : `function`
 
 - `tag` {string}: Required.
 - `attr` {number}: Required.
 
-3. `ruleBuilders.findMissingTag(tag)` : `function`
+3. `ruleBuilders.tagExists(tag)` : `function`
 
 - `tag` {string}: Required.
 
 If you want to use custom rules by using this module, you can write like this.
 
-```
-const customRule = ruleBuilders.countTag('h2', 1);
-const notices = seoQuickChecker(dom, [customRule]);
+```javascript
+// h2 tags must be 1 or less
+const customRule1 = ruleBuilders.tagCountMoreThan('h2', 1);
+// find span tags without class attr
+const customRule2 = ruleBuilders.tagMissingAttr('span', 'class');
+// find meta[name=robot] which is the child of head
+const customRule3 = ruleBuilders.tagExists('head meta[name=robots]');
+
+const notices = seoQuickChecker(dom, [customRule1, customRule2, customRule3]);
 ```
 
 ### 3. getDom module
@@ -225,7 +232,7 @@ const notices = seoQuickChecker(dom, [customRule]);
 
 ### 5. output module
 
-1. `output.toConsoleLogLog(notices, connector)` : `undefined`
+1. `output.toConsoleLog(notices, connector)` : `undefined`
 
 - `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
 - `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
@@ -252,7 +259,7 @@ If you want to use streaming API of Node.js to `getDom`, you can call like this.
 
 Full example of `index.js`.
 
-```
+```javascript
 'use strict';
 
 const fs = require('fs');
@@ -281,7 +288,7 @@ If you want to use streaming API of Node.js to `output`, you can call like this.
 
 Full example of `index.js`.
 
-```
+```javascript
 'use strict';
 
 const fs = require('fs');
@@ -312,7 +319,7 @@ Please be careful, there is no `await` before `output.toConsoleLog(notices)`.
 
 Full example of `index.js`.
 
-```
+```javascript
 'use strict';
 
 const {

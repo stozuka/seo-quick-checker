@@ -9,7 +9,7 @@ const assert = chai.assert;
 const expect = chai.expect;
 const BASE_PATH = path.resolve(
   __dirname,
-  '../../fixtures/default-rules/find-missing-attr',
+  '../../fixtures/default-rules/tag-missing-attr',
 );
 
 describe('default-rules', () => {
@@ -24,10 +24,10 @@ describe('default-rules', () => {
     it('should return the corrent number of notices', async () => {
       const filePath = path.resolve(BASE_PATH, 'a-without-rel.html');
       const dom = await fromFile(filePath);
-      // Notice: "There are(is) ${diff} ${tag} without ${attr}.""
+      // notice: "There are(is) ${diff} ${tag} without ${attr}.""
       const notice = aWithoutRel(dom);
       const words = notice.split(' ');
-      const number = parseInt(words[2]);
+      const number = parseInt(words[2]); // ${diff} is the number to check
       assert.equal(number, 1);
     });
 

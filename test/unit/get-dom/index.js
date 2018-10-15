@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const chai = require('chai');
+const expect = chai.expect;
 const { fromFile, fromStream } = require('../../../lib/get-dom');
 
 const assert = chai.assert;
@@ -16,6 +17,10 @@ describe('get-dom', () => {
       const h1Text = dom('h1').text();
       assert.equal(h1Text, 'test');
     });
+
+    it('should throw an error when missing first argument', () => {
+      expect(fromFile()).to.be.rejected;
+    });
   });
 
   describe('from-stream', () => {
@@ -25,6 +30,10 @@ describe('get-dom', () => {
       const dom = await fromStream(rs);
       const h1Text = dom('h1').text();
       assert.equal(h1Text, 'test');
+    });
+
+    it('should throw an error when missing first argument', () => {
+      expect(fromStream()).to.be.rejected;
     });
   });
 });

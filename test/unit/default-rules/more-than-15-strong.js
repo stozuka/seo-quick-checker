@@ -8,7 +8,7 @@ const { moreThan15Strong } = require('../../../lib/default-rules');
 const expect = chai.expect;
 const BASE_PATH = path.resolve(
   __dirname,
-  '../../fixtures/default-rules/count-tag',
+  '../../fixtures/default-rules/tag-count-more-than',
 );
 
 describe('default-rules', () => {
@@ -20,8 +20,8 @@ describe('default-rules', () => {
       expect(notice).to.be.an('string');
     });
 
-    it('should return empty string when strong tag not more than 15', async () => {
-      const filePath = path.resolve(BASE_PATH, 'less-than-15-strong.html');
+    it('should return empty string when having 15 strong tags', async () => {
+      const filePath = path.resolve(BASE_PATH, '15-strong.html');
       const dom = await fromFile(filePath);
       const notice = moreThan15Strong(dom);
       expect(notice).to.be.empty;

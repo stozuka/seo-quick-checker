@@ -8,7 +8,7 @@ const { headWithoutMetaKeywords } = require('../../../lib/default-rules');
 const expect = chai.expect;
 const BASE_PATH = path.resolve(
   __dirname,
-  '../../fixtures/default-rules/find-missing-tag',
+  '../../fixtures/default-rules/tag-exists',
 );
 
 describe('default-rules', () => {

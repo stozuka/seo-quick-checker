@@ -8,7 +8,7 @@ const { headWithoutMetaDescription } = require('../../../lib/default-rules');
 const expect = chai.expect;
 const BASE_PATH = path.resolve(
   __dirname,
-  '../../fixtures/default-rules/find-missing-tag',
+  '../../fixtures/default-rules/tag-exists',
 );
 
 describe('default-rules', () => {
@@ -33,7 +33,7 @@ describe('default-rules', () => {
       expect(notice).to.be.empty;
     });
 
-    it('should return the notice when meta description found but not under head', async () => {
+    it('should return the notice when meta description exists but not under head', async () => {
       const filePath = path.resolve(
         BASE_PATH,
         'meta-description-not-under-head.html',
