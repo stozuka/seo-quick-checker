@@ -1,35 +1,10 @@
 # seo-quick-checker [![CircleCI](https://circleci.com/gh/stozuka/seo-quick-checker.svg?style=svg)](https://circleci.com/gh/stozuka/seo-quick-checker) [![npm version](https://badge.fury.io/js/seo-quick-checker.svg)](https://badge.fury.io/js/seo-quick-checker) ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
 
-A package to quickly check if the HTML is SEO friednly.
+A package to quickly check if the HTML is SEO friednly. It outputs the notice messages after parsing the HTML file provided.
 
 ## Installation
 
 `npm i seo-quick-checker`
-
-## Features
-
-Provides default rules below.
-
-- Find a tags without rel attribute
-- Find img tags without alt attribute
-- Check if number of h1 tag is more than 2
-- Check if number of strong tag is more than 15
-- Check if there is a title under head
-- Check if there is a meta keywords under head
-- Check if there is a meta description under head
-
-On top of that, you can defined you own rules by using `ruleBuilder` module.
-
-For input, this package provides two ways.
-
-- Using Node.js fs.readFile
-- Using Node.js stream.readableStream
-
-For output, this packages provides three ways below.
-
-- Using Node.js fs.writeFile
-- Using Node.js stream.writableStream
-- Using Node.js console.log
 
 ## Getting Started
 
