@@ -10,19 +10,18 @@ A package to quickly check if the HTML is SEO friednly. It outputs the notice me
 
 ### 1. Basic Setup
 
-Create a new directory and move there.
-Then, you can run these commands to start the project.
+Create a project.
 
 ```
-mkdir seo-quick-checker-test
-cd seo-quick-checker-test
+mkdir test
+cd test
 npm init
 npm i
 ```
 
 ### 2. Create Files
 
-Create needed directories and files.
+Create folders and files inside the project.
 
 ```
 touch index.js
@@ -39,9 +38,10 @@ To test out, you can copy-paste these code to `index.js` and `input/index.html`.
 'use strict';
 
 const {
-  seoQuickChecker,
   defaultRules,
+  ruleBuilders,
   getDom,
+  seoQuickChecker,
   output,
 } = require('seo-quick-checker');
 
@@ -108,7 +108,7 @@ Now you can run the script.
 node index.js
 ```
 
-When it's done, `output/output.txt` will be created.
+When it's successfuly done, `output/output.txt` will be created.
 
 `output/output.txt`
 
@@ -154,31 +154,31 @@ defaultRules.all;
 // ]
 ```
 
-#### `defaultRules.aMissingRel` : Function
+#### `defaultRules.aMissingRel` : `Function`
 
-Check a if it is missing rel attribute.
+Check if there are \<a\> tags missing rel attribute.
 
-#### `defaultRules.noMetaDescriptionInHead` : Function
+#### `defaultRules.noMetaDescriptionInHead` : `Function`
 
 Check if meta description exists in head.
 
-#### `defaultRules.noMetaKeywordsInHead` : Function
+#### `defaultRules.noMetaKeywordsInHead` : `Function`
 
 Check if meta keywords exists in head.
 
-#### `defaultRules.noTitleInHead` : Function
+#### `defaultRules.noTitleInHead` : `Function`
 
 Check if title exists in head.
 
-#### `defaultRules.imgMissingAlt` : Function
+#### `defaultRules.imgMissingAlt` : `Function`
 
-Check img tag if it is missing alt attribute.
+Check if there are \<img\> tags missing alt attribute.
 
-#### `defaultRules.moreThan1H1` : Function
+#### `defaultRules.moreThan1H1` : `Function`
 
 Check if there are more than 1 h1 tags.
 
-#### `defaultRules.moreThan15Strong` : Function
+#### `defaultRules.moreThan15Strong` : `Function`
 
 Check if there are more than 15 strong tags.
 
@@ -193,7 +193,7 @@ const notices = seoQuickChecker(dom, defaultRules.all);
 If you want to check, for example, `defaultRules.aMissingRel`
 and `defaultRules.noMetaDescriptionInHead`
 
-You can use [] to wrap them because each of them is the function but second param of seoQuickChecker is an array.
+You can use `[]` to wrap them because each of them is the function but second param of `seoQuickChecker` is an array.
 
 ```javascript
 const notices = seoQuickChecker(dom, [
@@ -249,16 +249,16 @@ const notices = seoQuickChecker(dom, [customRule1, customRule2, customRule3]);
 
 ### 3. getDom module
 
-Get dom function from file or stream.
+Get `dom` function from file or stream.
 
 #### `getDom.fromFile(filePath, encoding)` : `Promise<function>`
 
 Get dom function from file.
 
-| params   |  type  | description       |
-| :------- | :----: | :---------------- |
-| filePath | string | Required.         |
-| encoding | string | Defaults to utf8. |
+| params   |  type  | description         |
+| :------- | :----: | :------------------ |
+| filePath | string | Required.           |
+| encoding | string | Defaults to "utf8". |
 
 #### `getDom.fromStream(rs)` : `Promise<function>`
 
@@ -279,8 +279,6 @@ Check the HTML using the rules provided. Return the notices.
 | dom    |  Function  | Required. The function returned from `getDom.fromFile` or `getDom.fromStream`.                                                      |
 | rules  | Function[] | Required. An array contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module. |
 
-dule.
-
 ### 5. output module
 
 Output the notices to console.log, file, or stream.
@@ -289,36 +287,36 @@ Output the notices to console.log, file, or stream.
 
 Outputs to console.log.
 
-| params    |   type   | description                                                      |
-| :-------- | :------: | :--------------------------------------------------------------- |
-| notices   | string[] | Required. Use the returning value of `seoQuickChecker` function. |
-| connector |  string  | Defaults to "\n".                                                |
+| params    |   type   | description                                                              |
+| :-------- | :------: | :----------------------------------------------------------------------- |
+| notices   | string[] | Required. You can use the returning value of `seoQuickChecker` function. |
+| connector |  string  | Defaults to "\n".                                                        |
 
 #### `output.toFile(filePath, notices, connector, options)` : `Promise<undefined>`
 
 Outputs to file.
 
-| params    |   type   | description                                                                                                                        |
-| :-------- | :------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| filePath  |  string  | Required.                                                                                                                          |
-| notices   | string[] | Required. Use the returning value of `seoQuickChecker` function.                                                                   |
-| connector |  string  | ReqDefaults to "\n".red.                                                                                                           |
-| options   |  Object  | Optional. Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details. |
+| params    |   type   | description                                                                                                              |
+| :-------- | :------: | :----------------------------------------------------------------------------------------------------------------------- |
+| filePath  |  string  | Required.                                                                                                                |
+| notices   | string[] | Required. You can use the returning value of `seoQuickChecker` function.                                                 |
+| connector |  string  | Defaults to "\n".                                                                                                        |
+| options   |  Object  | Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details. |
 
 #### `output.toStream(ws, notices, connector)` : `Promise<undefined>`
 
 Outputs to stream.
 
-| params    |      type       | description                                                      |
-| :-------- | :-------------: | :--------------------------------------------------------------- |
-| ws        | stream.Writable | Required.                                                        |
-| notices   |    string[]     | Required. Use the returning value of `seoQuickChecker` function. |
-| connector |     string      | Defaults to "\n".                                                |
-| encoding  |     string      | Defaults to "utf8".                                              |
+| params    |      type       | description                                                              |
+| :-------- | :-------------: | :----------------------------------------------------------------------- |
+| ws        | stream.Writable | Required.                                                                |
+| notices   |    string[]     | Required. You can use the returning value of `seoQuickChecker` function. |
+| connector |     string      | Defaults to "\n".                                                        |
+| encoding  |     string      | Defaults to "utf8".                                                      |
 
 ## More Examples
 
-### Use stream.Readable to getDom
+### Use stream to getDom
 
 `const dom = await getDom.fromStream(rs);`
 
@@ -329,9 +327,10 @@ Full example of `index.js`.
 
 const fs = require('fs');
 const {
-  seoQuickChecker,
   defaultRules,
+  ruleBuilders,
   getDom,
+  seoQuickChecker,
   output,
 } = require('seo-quick-checker');
 
@@ -347,7 +346,7 @@ const {
 })();
 ```
 
-### Use stream.Writable to output.
+### Use stream to output.
 
 `await output.toStream(ws, notices);`
 
@@ -358,9 +357,10 @@ Full example of `index.js`.
 
 const fs = require('fs');
 const {
-  seoQuickChecker,
   defaultRules,
+  ruleBuilders,
   getDom,
+  seoQuickChecker,
   output,
 } = require('seo-quick-checker');
 
@@ -379,9 +379,9 @@ const {
 
 ### Output to console.log
 
-Please be careful, there is no `await` before `output.toConsoleLog(notices)`.
-
 `output.toConsoleLog(notices);`
+
+Please be careful, there is no `await` before `output.toConsoleLog(notices)`.
 
 Full example of `index.js`.
 
@@ -391,9 +391,10 @@ Full example of `index.js`.
 const fs = require('fs');
 
 const {
-  seoQuickChecker,
   defaultRules,
+  ruleBuilders,
   getDom,
+  seoQuickChecker,
   output,
 } = require('seo-quick-checker');
 
@@ -408,3 +409,7 @@ const {
   }
 })();
 ```
+
+## LICENSE
+
+MIT
