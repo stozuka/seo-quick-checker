@@ -251,7 +251,7 @@ const notices = seoQuickChecker(dom, [customRule1, customRule2, customRule3]);
 
 Get `dom` function from file or stream.
 
-#### `getDom.fromFile(filePath, encoding)` : `Promise<function>`
+#### `getDom.fromFile(filePath[, encoding])` : `Promise<function>`
 
 Get dom function from file.
 
@@ -283,7 +283,7 @@ Check the HTML using the rules provided. Return the notices.
 
 Output the notices to console.log, file, or stream.
 
-#### `output.toConsoleLog(notices, connector)` : `undefined`
+#### `output.toConsoleLog(notices[, connector])` : `undefined`
 
 Outputs to console.log.
 
@@ -292,7 +292,7 @@ Outputs to console.log.
 | notices   | string[] | Required. You can use the returning value of `seoQuickChecker` function. |
 | connector |  string  | Defaults to "\n".                                                        |
 
-#### `output.toFile(filePath, notices, connector, options)` : `Promise<undefined>`
+#### `output.toFile(filePath, notices[, connector][, options])` : `Promise<undefined>`
 
 Outputs to file.
 
@@ -303,7 +303,7 @@ Outputs to file.
 | connector |  string  | Defaults to "\n".                                                                                                          |
 | options   |  Object  | Defaults to `{}`. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details. |
 
-#### `output.toStream(ws, notices, connector)` : `Promise<undefined>`
+#### `output.toStream(ws, notices[, connector])` : `Promise<undefined>`
 
 Outputs to stream.
 
