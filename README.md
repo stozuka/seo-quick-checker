@@ -110,13 +110,35 @@ node index.js
 
 When it's done, `output/output.txt` will be created.
 
-`output/output.txt` contains the results of the seoQuickChecker function.
+`output/output.txt`
+
+```
+There are(is) 1 a without rel.
+This HTML does not have head meta[name=description] tag.
+This HTML does not have head meta[name=keywords] tag.
+This HTML does not have head title tag.
+There are(is) 1 img without alt.
+This HTML has more than 1 h1.
+This HTML has more than 15 strong.
+```
 
 ## API Reference
 
+List of APIs
+
+1. defaultRules module
+1. ruleBuilders module
+1. getDom module
+1. seoQuickChecker function
+1. output module
+
 ### 1. defaultRules module
 
-1. `defaultRules.all`
+A module contains default rule functions.
+
+#### `defaultRules.all` : Function[]
+
+Return all the functions of the default rules.
 
 ```javascript
 defaultRules.all;
@@ -132,24 +154,46 @@ defaultRules.all;
 // ]
 ```
 
-To select some of them, you can get the functions one by one like this.
+#### `defaultRules.aMissingRel` : Function
 
-2. `defaultRules.aMissingRel`
-3. `defaultRules.noMetaDescriptionInHead`
-4. `defaultRules.noMetaKeywordsInHead`
-5. `defaultRules.noTitleInHead`
-6. `defaultRules.imgMissingAlt`
-7. `defaultRules.moreThan1H1`
-8. `defaultRules.moreThan15Strong`
+Check a if it is missing rel attribute.
 
-If you want to check all the default rules, you can write like this.
+#### `defaultRules.noMetaDescriptionInHead` : Function
 
-```
+Check if meta description exists in head.
+
+#### `defaultRules.noMetaKeywordsInHead` : Function
+
+Check if meta keywords exists in head.
+
+#### `defaultRules.noTitleInHead` : Function
+
+Check if title exists in head.
+
+#### `defaultRules.imgMissingAlt` : Function
+
+Check img tag if it is missing alt attribute.
+
+#### `defaultRules.moreThan1H1` : Function
+
+Check if there are more than 1 h1 tags.
+
+#### `defaultRules.moreThan15Strong` : Function
+
+Check if there are more than 15 strong tags.
+
+#### > Usage
+
+If you want to check all the default rules.
+
+```javascript
 const notices = seoQuickChecker(dom, defaultRules.all);
 ```
 
 If you want to check, for example, `defaultRules.aMissingRel`
-and `defaultRules.noMetaDescriptionInHead`, you can use [] to wrap them because each of them is the function but second param of seoQuickChecker is an array.
+and `defaultRules.noMetaDescriptionInHead`
+
+You can use [] to wrap them because each of them is the function but second param of seoQuickChecker is an array.
 
 ```javascript
 const notices = seoQuickChecker(dom, [
@@ -160,28 +204,44 @@ const notices = seoQuickChecker(dom, [
 
 ### 2. ruleBuilders module
 
-1. `ruleBuilders.tagCountMoreThan(tag, maxCount)` : `function`
+A module to create rule functions.
 
-- `tag` {string}: Required.
-- `maxCount` {number}: Required. For example, if you want to check if there are 10 or less tags, you can set `maxCount = 10`. In this case 10 is ok, but 11 or more will be reported as a notice of `seoQuickChecker` function.
+#### `ruleBuilders.tagCountMoreThan(tag, maxCount)` : `Function`
 
-2. `ruleBuilders.tagCountMoreThan(tag, attr)` : `function`
+Create a function which checks if the number of tag is more than maxCount
 
-- `tag` {string}: Required.
-- `attr` {number}: Required.
+| params   |  type  | description                                                                                     |
+| :------- | :----: | :---------------------------------------------------------------------------------------------- |
+| tag      | string | Required                                                                                        |
+| maxCount | number | Required. Max count of the tag. Notice will be created if the count is more than this maxCount. |
 
-3. `ruleBuilders.tagExists(tag)` : `function`
+#### `ruleBuilders.tagMissingAttr(tag, attr)` : `Function`
 
-- `tag` {string}: Required.
+Create a function which checks if the tag is missing the attribute.
+
+| params |  type  | description |
+| :----- | :----: | :---------- |
+| tag    | string | Required.   |
+| attr   | string | Required.   |
+
+#### `ruleBuilders.tagExists(tag)` : `Function`
+
+Create a function which checks if the tag exists.
+
+| params |  type  | description |
+| :----- | :----: | :---------- |
+| tag    | string | Required.   |
+
+#### > Usage
 
 If you want to use custom rules by using this module, you can write like this.
 
 ```javascript
-// h2 tags must be 1 or less
+// Check if the number of h2 is more than 1.
 const customRule1 = ruleBuilders.tagCountMoreThan('h2', 1);
-// find span tags without class attr
+// Check if span tag is missing class attribute.
 const customRule2 = ruleBuilders.tagMissingAttr('span', 'class');
-// find meta[name=robot] which is the child of head
+// Check if meta[name=robot] exists in head.
 const customRule3 = ruleBuilders.tagExists('head meta[name=robots]');
 
 const notices = seoQuickChecker(dom, [customRule1, customRule2, customRule3]);
@@ -189,46 +249,76 @@ const notices = seoQuickChecker(dom, [customRule1, customRule2, customRule3]);
 
 ### 3. getDom module
 
-1. `getDom.fromFile(filePath, encoding)` : `Promise<function>`
+Get dom function from file or stream.
 
-- `filePath` {string}: Required.
-- `encoding` {string}: Optional. Defaults to "utf8".
+#### `getDom.fromFile(filePath, encoding)` : `Promise<function>`
 
-2. `getDom.fromStream(rs)` : `Promise<function>`
+Get dom function from file.
 
-- `filePath` {stream.Readable}: Required.
+| params   |  type  | description       |
+| :------- | :----: | :---------------- |
+| filePath | string | Required.         |
+| encoding | string | Defaults to utf8. |
+
+#### `getDom.fromStream(rs)` : `Promise<function>`
+
+Get dom function from stream.
+
+| params |      type       | description |
+| :----- | :-------------: | :---------- |
+| rs     | stream.Readable | Required.   |
 
 ### 4. seoQuickChecker function
 
-1. `seoQuickChecker(dom, rules)` : `string[]`
+Check the HTML using the rules provided. Return the notices.
 
-- `dom` {function}: Required. The function returned from `getDom.fromFile` or `getDom.fromStream`.
-- `rules` {function[]}: Required. An array contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module.
+#### `seoQuickChecker(dom, rules)` : `string[]`
+
+| params |    type    | description                                                                                                                         |
+| :----- | :--------: | :---------------------------------------------------------------------------------------------------------------------------------- |
+| dom    |  Function  | Required. The function returned from `getDom.fromFile` or `getDom.fromStream`.                                                      |
+| rules  | Function[] | Required. An array contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module. |
+
+dule.
 
 ### 5. output module
 
-1. `output.toConsoleLog(notices, connector)` : `undefined`
+Output the notices to console.log, file, or stream.
 
-- `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
-- `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
+#### `output.toConsoleLog(notices, connector)` : `undefined`
 
-2. `output.toFile(filePath, notices, connector, options)` : `Promise<undefined>`
+Outputs to console.log.
 
-- `filePath` {string}: Required. Output file path.
-- `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
-- `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
-- `options` {Object}: Optional. Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details.
+| params    |   type   | description                                                      |
+| :-------- | :------: | :--------------------------------------------------------------- |
+| notices   | string[] | Required. Use the returning value of `seoQuickChecker` function. |
+| connector |  string  | Defaults to "\n".                                                |
 
-3. `output.toStream(ws, notices, connector)` : `Promise<undefined>`
+#### `output.toFile(filePath, notices, connector, options)` : `Promise<undefined>`
 
-- `filePath` {string}: Required. Output file path.
-- `notices` {string[]}: Required. Use the returning value of `seoQuickChecker` function.
-- `connector` {string}: Optional. Defaults to "\n". A charactor to join the elements of notices array.
-- `encoding` {string}: Optional. Defaults to "utf8".
+Outputs to file.
+
+| params    |   type   | description                                                                                                                        |
+| :-------- | :------: | :--------------------------------------------------------------------------------------------------------------------------------- |
+| filePath  |  string  | Required.                                                                                                                          |
+| notices   | string[] | Required. Use the returning value of `seoQuickChecker` function.                                                                   |
+| connector |  string  | ReqDefaults to "\n".red.                                                                                                           |
+| options   |  Object  | Optional. Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details. |
+
+#### `output.toStream(ws, notices, connector)` : `Promise<undefined>`
+
+Outputs to stream.
+
+| params    |      type       | description                                                      |
+| :-------- | :-------------: | :--------------------------------------------------------------- |
+| ws        | stream.Writable | Required.                                                        |
+| notices   |    string[]     | Required. Use the returning value of `seoQuickChecker` function. |
+| connector |     string      | Defaults to "\n".                                                |
+| encoding  |     string      | Defaults to "utf8".                                              |
 
 ## More Examples
 
-If you want to use streaming API of Node.js to `getDom`, you can call like this.
+### Use stream.Readable to getDom
 
 `const dom = await getDom.fromStream(rs);`
 
@@ -257,7 +347,7 @@ const {
 })();
 ```
 
-If you want to use streaming API of Node.js to `output`, you can call like this.
+### Use stream.Writable to output.
 
 `await output.toStream(ws, notices);`
 
@@ -287,7 +377,8 @@ const {
 })();
 ```
 
-If you want to `console.log` the notices, you can call like this.
+### Output to console.log
+
 Please be careful, there is no `await` before `output.toConsoleLog(notices)`.
 
 `output.toConsoleLog(notices);`
@@ -296,6 +387,8 @@ Full example of `index.js`.
 
 ```javascript
 'use strict';
+
+const fs = require('fs');
 
 const {
   seoQuickChecker,
@@ -315,23 +408,3 @@ const {
   }
 })();
 ```
-
-## Testing
-
-One time tesing
-
-`npm run test`
-
-Watch the testing
-
-`npm run watchtest`
-
-## Format and Lint
-
-To run Prettier
-
-`npm run fmt`
-
-To run ESLint
-
-`npm run lint`
