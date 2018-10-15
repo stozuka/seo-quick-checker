@@ -136,7 +136,7 @@ List of APIs
 
 A module contains default rule functions.
 
-#### `defaultRules.all` : Function[]
+#### `defaultRules.all` : `Function[]`
 
 Return all the functions of the default rules.
 
@@ -296,12 +296,12 @@ Outputs to console.log.
 
 Outputs to file.
 
-| params    |   type   | description                                                                                                              |
-| :-------- | :------: | :----------------------------------------------------------------------------------------------------------------------- |
-| filePath  |  string  | Required.                                                                                                                |
-| notices   | string[] | Required. You can use the returning value of `seoQuickChecker` function.                                                 |
-| connector |  string  | Defaults to "\n".                                                                                                        |
-| options   |  Object  | Defaults to {}. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details. |
+| params    |   type   | description                                                                                                                |
+| :-------- | :------: | :------------------------------------------------------------------------------------------------------------------------- |
+| filePath  |  string  | Required.                                                                                                                  |
+| notices   | string[] | Required. You can use the returning value of `seoQuickChecker` function.                                                   |
+| connector |  string  | Defaults to "\n".                                                                                                          |
+| options   |  Object  | Defaults to `{}`. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details. |
 
 #### `output.toStream(ws, notices, connector)` : `Promise<undefined>`
 
