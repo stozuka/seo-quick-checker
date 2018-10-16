@@ -18,7 +18,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'img-missing-alt.html');
       const dom = await fromFile(filePath);
       const notice = imgMissingAlt(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
 
     it('should return the corrent number of notices', async () => {
@@ -42,7 +42,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'img-with-empty-alt.html');
       const dom = await fromFile(filePath);
       const notice = imgMissingAlt(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
   });
 });

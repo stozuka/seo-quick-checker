@@ -18,7 +18,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'a-missing-rel.html');
       const dom = await fromFile(filePath);
       const notice = aMissingRel(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
 
     it('should return the corrent number of notices', async () => {
@@ -42,7 +42,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'a-with-empty-rel.html');
       const dom = await fromFile(filePath);
       const notice = aMissingRel(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
   });
 });

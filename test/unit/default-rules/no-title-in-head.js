@@ -17,7 +17,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'no-title-in-head.html');
       const dom = await fromFile(filePath);
       const notice = noTitleInHead(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
 
     it('should return empty string when title found', async () => {
@@ -31,7 +31,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'title-not-under-head.html');
       const dom = await fromFile(filePath);
       const notice = noTitleInHead(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
   });
 });

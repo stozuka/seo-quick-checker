@@ -17,7 +17,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'more-than-1-h1.html');
       const dom = await fromFile(filePath);
       const notice = moreThan1H1(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
 
     it('should return empty string when having 2 h1 tags', async () => {

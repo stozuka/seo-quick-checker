@@ -20,7 +20,7 @@ describe('default-rules', () => {
       );
       const dom = await fromFile(filePath);
       const notice = noMetaKeywordsInHead(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
 
     it('should return empty string when meta keywords found', async () => {
@@ -37,7 +37,7 @@ describe('default-rules', () => {
       );
       const dom = await fromFile(filePath);
       const notice = noMetaKeywordsInHead(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
   });
 });

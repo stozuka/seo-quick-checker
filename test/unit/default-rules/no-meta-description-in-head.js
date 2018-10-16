@@ -20,7 +20,7 @@ describe('default-rules', () => {
       );
       const dom = await fromFile(filePath);
       const notice = noMetaDescriptionInHead(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
 
     it('should return empty string when found meta description', async () => {
@@ -40,7 +40,7 @@ describe('default-rules', () => {
       );
       const dom = await fromFile(filePath);
       const notice = noMetaDescriptionInHead(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
   });
 });

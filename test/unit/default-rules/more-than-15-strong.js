@@ -17,7 +17,7 @@ describe('default-rules', () => {
       const filePath = path.resolve(BASE_PATH, 'more-than-15-strong.html');
       const dom = await fromFile(filePath);
       const notice = moreThan15Strong(dom);
-      expect(notice).to.be.an('string');
+      expect(notice).to.not.be.empty;
     });
 
     it('should return empty string when having 15 strong tags', async () => {
