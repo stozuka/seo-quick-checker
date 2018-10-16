@@ -40,7 +40,7 @@ describe('output', () => {
   describe('to-file', () => {
     const filePath = 'output.txt';
 
-    beforeEach(() => mock({ filePath: '' }));
+    beforeEach(() => mock({}));
 
     afterEach(() => mock.restore());
 
@@ -64,7 +64,7 @@ describe('output', () => {
     const filePath = 'output.txt';
     const encoding = 'utf8';
 
-    beforeEach(() => mock({ filePath: '' }));
+    beforeEach(() => mock({}));
 
     afterEach(() => mock.restore());
 
