@@ -1,6 +1,6 @@
 {
   "name": "seo-quick-checker",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A package to quickly check if the HTML is SEO friendly.",
   "main": "lib/index.js",
   "scripts": {
