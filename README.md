@@ -108,7 +108,7 @@ Now you can run the script.
 node index.js
 ```
 
-When it's successfuly done, `output/output.txt` will be created.
+When it's successfully done, `output/output.txt` will be created.
 
 `output/output.txt`
 
@@ -303,7 +303,7 @@ Outputs to file.
 | connector |  string  | Defaults to "\n".                                                                                                          |
 | options   |  Object  | Defaults to `{}`. Please see `https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback` for more details. |
 
-#### `output.toStream(ws, notices[, connector])` : `Promise<undefined>`
+#### `output.toStream(ws, notices[, connector][, encoding])` : `Promise<undefined>`
 
 Outputs to stream.
 
@@ -326,6 +326,7 @@ Full example of `index.js`.
 'use strict';
 
 const fs = require('fs');
+
 const {
   defaultRules,
   ruleBuilders,
@@ -356,6 +357,7 @@ Full example of `index.js`.
 'use strict';
 
 const fs = require('fs');
+
 const {
   defaultRules,
   ruleBuilders,
