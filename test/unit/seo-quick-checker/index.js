@@ -10,7 +10,7 @@ const BASE_PATH = path.resolve(__dirname, '../../fixtures/seo-quick-checker');
 const DEFAULT_RULE_LENGTH = defaultRules.all.length;
 
 describe('seo-quick-checker', () => {
-  it('should return 8 notices when all the default rules are NG', async () => {
+  it('should return DEFAULT_RULE_LENGTH notices when all the default rules are NG', async () => {
     const filePath = path.resolve(BASE_PATH, 'all-ng.html');
     const dom = await getDom.fromFile(filePath);
     const rules = defaultRules.all;
