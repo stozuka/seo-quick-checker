@@ -134,7 +134,7 @@ List of APIs
 
 ### 1. defaultRules module
 
-A module contains default rule functions.
+Module which contains default rule functions.
 
 #### `defaultRules.all` : `Function[]`
 
