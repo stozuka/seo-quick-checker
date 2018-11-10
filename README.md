@@ -277,7 +277,7 @@ Check the HTML using the rules provided. Return the notices.
 | params |    type    | description                                                                                                                         |
 | :----- | :--------: | :---------------------------------------------------------------------------------------------------------------------------------- |
 | dom    |  Function  | Required. The function returned from `getDom.fromFile` or `getDom.fromStream`.                                                      |
-| rules  | Function[] | Required. An array contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module. |
+| rules  | Function[] | Required. An array which contains the functions defined in `defaultRules` modules or user defined rules created by `ruleBuilders` module. |
 
 ### 5. output module
 
